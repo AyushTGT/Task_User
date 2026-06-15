@@ -11,12 +11,28 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useWebSocket(accessToken);
 
+  // Fallback: persist.onRehydrateStorage doesn't reliably fire in Next.js App Router
+  // production builds, so we manually trigger _hasHydrated via Zustand's persist API.
+  useEffect(() => {
+    if (useAuthStore.persist.hasHydrated()) {
+      useAuthStore.setState({ _hasHydrated: true });
+    } else {
+      const unsub = useAuthStore.persist.onFinishHydration(() => {
+        useAuthStore.setState({ _hasHydrated: true });
+      });
+      return unsub;
+    }
+  }, []);
+
   useEffect(() => {
     if (_hasHydrated && !user) router.push("/login");
   }, [user, _hasHydrated, router]);
 
-  // Show nothing until Zustand has restored state from localStorage
-  if (!_hasHydrated) return null;
+  if (!_hasHydrated) return (
+    <div className="flex h-screen items-center justify-center bg-[rgb(var(--bg))]">
+      <div className="w-8 h-8 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
   if (!user) return null;
 
   return (
