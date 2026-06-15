@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 248 250 252;
+    --surface: 255 255 255;
+    --surface-2: 241 245 249;
+    --border: 226 232 240;
+    --text: 15 23 42;
+    --text-muted: 100 116 139;
+    --brand: 99 102 241;
+  }
+
+  .dark {
+    --bg: 9 9 11;
+    --surface: 18 18 21;
+    --surface-2: 27 27 31;
+    --border: 39 39 42;
+    --text: 250 250 250;
+    --text-muted: 113 113 122;
+    --brand: 129 140 248;
+  }
+
+  * {
+    border-color: rgb(var(--border));
+  }
+
+  body {
+    @apply bg-[rgb(var(--bg))] text-[rgb(var(--text))] font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    @apply bg-brand-100 dark:bg-brand-900 text-brand-900 dark:text-brand-100;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply bg-[rgb(var(--surface))] border border-[rgb(var(--border))];
+  }
+
+  .surface-2 {
+    @apply bg-[rgb(var(--surface-2))];
+  }
+
+  .text-muted {
+    @apply text-[rgb(var(--text-muted))];
+  }
+
+  .btn-primary {
+    @apply bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2 rounded-lg transition-all duration-150 active:scale-95 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-[rgb(var(--surface-2))] hover:bg-[rgb(var(--border))] text-[rgb(var(--text))] font-medium px-4 py-2 rounded-lg transition-all duration-150 active:scale-95 border border-[rgb(var(--border))];
+  }
+
+  .btn-ghost {
+    @apply hover:bg-[rgb(var(--surface-2))] text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))] font-medium px-3 py-1.5 rounded-lg transition-all duration-150;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg transition-all duration-150 active:scale-95;
+  }
+
+  .input {
+    @apply w-full px-3 py-2 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--surface))] text-[rgb(var(--text))] placeholder:text-[rgb(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500 transition-all duration-150 text-sm;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-[rgb(var(--text))] mb-1.5;
+  }
+
+  .card {
+    @apply bg-[rgb(var(--surface))] border border-[rgb(var(--border))] rounded-xl shadow-card dark:shadow-card-dark;
+  }
+
+  .card-hover {
+    @apply card hover:shadow-card-hover dark:hover:shadow-card transition-shadow duration-200 cursor-pointer;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .skeleton {
+    @apply animate-pulse bg-[rgb(var(--surface-2))] rounded;
+    background: linear-gradient(90deg, rgb(var(--surface-2)) 25%, rgb(var(--border)) 50%, rgb(var(--surface-2)) 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer;
+  }
+
+  .sidebar-item-active {
+    @apply bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300;
+  }
+
+  .sidebar-item-inactive {
+    @apply text-[rgb(var(--text-muted))] hover:bg-[rgb(var(--surface-2))] hover:text-[rgb(var(--text))];
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-[rgb(var(--border))] rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-[rgb(var(--text-muted))];
+}
+
+/* Kanban column scrollbar hidden */
+.kanban-col::-webkit-scrollbar {
+  display: none;
+}
+.kanban-col {
+  scrollbar-width: none;
+}
+
+/* Drag overlay */
+.drag-overlay {
+  @apply opacity-90 rotate-1 scale-105;
+  box-shadow: 0 20px 40px -10px rgb(0 0 0 / 0.3);
+}
